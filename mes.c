@@ -6,7 +6,48 @@ int main () {
     printf("Digite um número de 1 a 12: \n");
     scanf("%d", &mes);
     
-      if (mes == 1){
+    switch (mes){
+    case 1:
+        printf("january\n");
+        break;
+    case 2:
+        printf("February\n");
+        break;
+    case 3:
+        printf("March\n");
+        break;
+    case 4:
+        printf("April\n");
+        break;
+    case 5:
+        printf("May\n");
+        break;
+    case 6:
+        printf("June\n");
+        break;
+    case 7:
+        printf("July\n");
+        break;
+    case 8:
+        printf("August\n");
+        break;
+    case 9:
+        printf("September\n");
+        break;
+    case 10:
+        printf("October\n");
+        break;
+    case 11:
+        printf("November\n");
+        break;
+    case 12:
+        printf("December\n");
+        break;
+    default:
+        break;
+    }
+
+      /*if (mes == 1){
         printf("Janeiro \n", mes);
     } else if  (mes == 2){
         printf("Fevereiro \n", mes);
@@ -32,7 +73,7 @@ int main () {
         printf("Dezembro \n", mes);
     } else {
         printf("Mes inexistente \n");
-    }
+    }*/
     
     return 0;
 }
