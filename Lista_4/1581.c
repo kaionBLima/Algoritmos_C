@@ -2,23 +2,32 @@
 #include <string.h>
 
 int main () {
-    int Ntes, Kpess;
-    char SIdioma[21];
-    scanf("%d", &Ntes);
-    scanf("%d", &Kpess);
+   int numTestes, numIdiomas;
+    scanf("%d", &numTestes);
 
-    for (int k = 0; k < Kpess; k++) { //k é o numero de linhas
-    while(1) {
-        scanf("%c", SIdioma);
-        fgets(SIdioma, 21, stdin);
+    for(int i = 0; i < numTestes; i++){
+        scanf("%d", &numIdiomas);
+        char idiomas[numIdiomas][21]; // lista de strings. Cada linha guarda uma string
 
-        if (SIdioma == SIdioma) {
-            printf("%c", SIdioma);
+        for(int k = 0; k < numIdiomas; k++){
+            scanf("%s", idiomas[k]);
         }
-        else {
-            printf("Ingles");
+
+        char primeiroIdioma[21];
+        char idiomaFalado[21];
+
+        strcpy(primeiroIdioma, idiomas[0]);
+        strcpy(idiomaFalado, primeiroIdioma);
+
+        for(int k = 0; k < numIdiomas; k++){
+            if(strcmp(primeiroIdioma, idiomas[k]) != 0) {
+                strcpy(idiomaFalado, "ingles");
+                break;
+                
+            }
         }
-        }
+        printf("%s\n", idiomaFalado);
     }
+
     return 0;
 }
