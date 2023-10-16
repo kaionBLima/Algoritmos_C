@@ -1,69 +1,79 @@
 #include <stdio.h>
+#include <string.h>
 
+float calculaSomaItensVetor(float *vetor, int numItens)
+{
+    float soma = 0;
 
-calculaSomaItensVetor(float* vetor){
-  float soma;
-  int numItens = sizeof(vetor)
-}
-
-
-
-
-
-
-
-calculaMediaPonderada(float* valores,float *pesos){
-   float soma = 0;
-   int numItens = sizeof(valores)/sizeof(valores[0]); //numero de itens de um vetor.
-   //calculando a soma ponderada das notas
-   for (int i = 0; i < numItens; i++)
+    for (int i = 0; i < numItens; i++)
     {
-        soma += valores[i]*pesos[i];
+        // soma = soma + notas[i]*pesos[i];
+        soma += vetor[i];
     }
-   
-    float mediaPonderada=
-
-  
+    return soma;
 }
 
+float calculaMediaPonderada(float *valores, float *pesos, int numItens)
+{
+    float somaPonderada = 0;
+    // calculando soma ponderada das notas
+    for (int i = 0; i < numItens; i++)
+    {
+        // soma = soma + notas[i]*pesos[i];
+        somaPonderada += valores[i] * pesos[i];
+    }
 
+    float somaPesos = calculaSomaItensVetor(pesos, numItens);
 
+    float mediaPonderada = somaPonderada / somaPesos;
+    return mediaPonderada;
+}
 
+char *checaAprovacao(float nota, float notaMinAprovacao, float notaReprovacao)
+{
+    if (nota >= notaMinAprovacao)
+    {
+        return "aprovado";
+    }
+    else if (nota <= notaReprovacao)
+    {
+        return "reprovado";
+    }
+    return "em exame";
+}
 
-int main(){
-    float notas[4],soma=0,pesos[4]={2,3,4,1};
+float calculaMediaFinal(float notaExame, float mediaInicial)
+{
+    float mediaFinal = (notaExame + mediaInicial) / 2;
+    return mediaFinal;
+}
+
+int main()
+{
+    float notas[4], pesos[4] = {2, 3, 4, 1};
+    char situacaoAluno[10];
 
     for (int i = 0; i < 4; i++)
     {
-        scanf("%f",&notas[i]);
+        scanf("%f", &notas[i]);
     }
-    
-     float media= soma/10;
-    printf("Media: %.1f\n",media);
+    int numItens = sizeof(notas) / sizeof(notas[0]);
+    float mediaInicial = calculaMediaPonderada(notas, pesos, numItens);
 
-    if (media < 5)
-    {
-        printf("Aluno reprovado.\n");
-    } 
-    else if(media >= 7){
-        printf("Aluno aprovado.\n");
-    }
-    else{
-        printf("Aluno em exame.\n");
+    printf("Media: %.1f\n", mediaInicial);
+
+    strcpy(situacaoAluno, checaAprovacao(mediaInicial, 7.0, 4.9));
+    printf("Aluno %s.\n", situacaoAluno);
+
+    if (strcmp(situacaoAluno, "em exame") == 0){ // 5 <= media < 7 -> aluno em recuperação
         float notaExame;
-        scanf("%f",&notaExame);
-        printf("Nota do exame: %.1f\n",notaExame);
-        float mediaFinal = (notaExame +media)/2;
-
-       if (mediaFinal>=5)
-       {
-          printf("Aluno aprovado.\n");
-       }else{
-          printf("Aluno reprovado.\n");
-       }
-       printf("Media final: %.1f\n",mediaFinal);
+        scanf("%f", &notaExame);
+        printf("Nota do exame: %.1f\n", notaExame);
+        float mediaFinal = calculaMediaFinal(notaExame, mediaInicial);
+        strcpy(situacaoAluno, checaAprovacao(mediaInicial, 5.0, 4.9));
+        printf("Aluno %s.\n", situacaoAluno);
+        printf("Media final: %.1f\n", mediaFinal);
     }
-    
 
     return 0;
 }
