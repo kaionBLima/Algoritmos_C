@@ -12,7 +12,7 @@ int main (){
     while (numero > 1){
 
         for (int i = 0; i < numero; i++){
-            printf("%d ", vetor[i]);
+            printf("%d", vetor[i]);
         }
         printf("\n");
 
@@ -23,6 +23,7 @@ int main (){
     }
 
     printf("%d", vetor[0]);
+      printf("\n");
 
     return 0;
 }
