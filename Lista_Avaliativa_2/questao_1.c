@@ -13,6 +13,10 @@ int main (){
 
         for (int i = 0; i < numero; i++){
             printf("%d", vetor[i]);
+
+            if(i < numero - 1){
+                printf(" ");
+            }
         }
         printf("\n");
 
@@ -23,7 +27,7 @@ int main (){
     }
 
     printf("%d", vetor[0]);
-      printf("\n");
+    printf("\n");
 
     return 0;
 }
