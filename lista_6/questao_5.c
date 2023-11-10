@@ -7,6 +7,7 @@ int main() {
         scanf("%d", array + i);
         printf("%d\n", *(array + i) * 2);
     }
+    
 
     return 0;
 }
