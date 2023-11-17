@@ -28,12 +28,12 @@ int numerosRomanos (char represRomano) {
         return retorno;
 }
 
-    void conv_binario(int decimal, char bin[]) {
+void conv_binario(int decimal, char bin[]) {
    bin[0] = '\0';
 
    while (decimal > 0) {
         char digito[2];
-        printf(digito, "%d", decimal % 2);
+        sprintf(digito, "%d", decimal % 2);
         strcat(bin, digito);
         decimal /= 2;
     }
@@ -57,7 +57,7 @@ int numerosRomanos (char represRomano) {
         if (div < 10) {
             hexadec[i] = div + '0';
         } else {
-            hexadec[i] = div - 10 + 'A';
+            hexadec[i] = div - 10 + 'a';
         }
 
         decimal /= 16;

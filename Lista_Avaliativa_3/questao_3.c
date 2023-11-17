@@ -3,22 +3,20 @@
 #include <ctype.h>
 
 int validarPlaca(char *placa) {
-    // Verifica se a placa está no formato antigo (LLL-NNNN) ou no formato novo (LLLNLNN)
     int comprimento = strlen(placa);
     if ((comprimento == 8 && placa[3] == '-') || (comprimento == 7 && isalpha(placa[6]) && isdigit(placa[5]))) {
-        return 1; // Placa válida
+        return 1; 
     } else {
-        return 0; // Placa inválida
+        return 0; 
     }
 }
 
 int validarDia(char *dia) {
-    // Verifica se o dia da semana está no formato adequado
     if (strcmp(dia, "SEGUNDA-FEIRA") == 0 || strcmp(dia, "TERCA-FEIRA") == 0 || strcmp(dia, "QUARTA-FEIRA") == 0 ||
         strcmp(dia, "QUINTA-FEIRA") == 0 || strcmp(dia, "SEXTA-FEIRA") == 0 || strcmp(dia, "SABADO") == 0 || strcmp(dia, "DOMINGO") == 0) {
-        return 1; // Dia válido
+        return 1; 
     } else {
-        return 0; // Dia inválido
+        return 0; 
     }
 }
 
@@ -26,13 +24,13 @@ int main() {
     char placa[10];
     char dia[20];
 
-    // Entrada da placa
+    
     fgets(placa, sizeof(placa), stdin);
     placa[strcspn(placa, "\n")] = '\0'; // Remover o caractere de nova linha
 
-    // Entrada do dia da semana
+    
     fgets(dia, sizeof(dia), stdin);
-    dia[strcspn(dia, "\n")] = '\0'; // Remover o caractere de nova linha
+    dia[strcspn(dia, "\n")] = '\0';
 
     // Validar a placa e o dia da semana
     if (!validarPlaca(placa)) {
@@ -48,49 +46,54 @@ int main() {
     // Verificar se a placa pode circular no dia informado
     int ultimoDigito = placa[strlen(placa) - 1] - '0';
     switch (dia[0]) {
-        case 'Z': //organizar
-            printf("Nao ha proibicao no fim de semana\n");
-            break;
-        case 'D': //segunda
+        case 'S':
             if (ultimoDigito == 0 || ultimoDigito == 1) {
-                printf(" Nao pode circular\n");
+                printf("%s nao pode circular %s\n", placa, dia);
             } else {
-                printf("%s pode circular\n", placa);
+                printf("%s pode circular %s\n", placa, dia);
             }
             break;
-        case 'T': //terça
+        case 'T':
             if (ultimoDigito == 2 || ultimoDigito == 3) {
-                printf("Nao pode circular\n");
+                printf("%s nao pode circular %s\n", placa, dia);
             } else {
-                printf("Pode circular\n");
+                printf("%s pode circular %s\n", placa, dia);
             }
             break;
-        case 'W': //Quarta
+        case 'Q': 
             if (ultimoDigito == 4 || ultimoDigito == 5) {
-                printf("Nao pode circular\n");
+                printf("%s nao pode circular %s\n", placa, dia);
             } else {
-                printf("Pode circular\n");
+                printf("%s pode circular %s\n", placa, dia);
             }
             break;
-        case 'Q': //Quinta
+        case 'I': 
             if (ultimoDigito == 6 || ultimoDigito == 7) {
-                printf("Nao pode circular\n");
+                printf("%s nao pode circular %s\n", placa, dia);
             } else {
-                printf("Pode circular\n");
+                printf("%s pode circular %s\n", placa, dia);
             }
             break;
-        case 'F': //Sexta
+        case 'F': 
             if (ultimoDigito == 8 || ultimoDigito == 9) {
-                printf("Nao pode circular\n");
+                printf("%s nao pode circular %s\n", placa, dia);
             } else {
-                printf("Pode circular\n");
+                printf("%s pode circular %s\n", placa, dia);
             }
             break;
-        case 'O': //outros
-            if ( dia == 'SABADO' || 'DOMINGO' /*ultimoDigito == 0 || ultimoDigito == 1 || ultimoDigito == 2 || ultimoDigito == 3 || ultimoDigito == 4 || ultimoDigito == 5 ||
-            ultimoDigito == 6 || ultimoDigito == 7 || ultimoDigito == 8 || ultimoDigito == 9*/) {
+        case 'D': //Sabado ou domingo ou outro
+            if (!validarPlaca(placa)) {
+                printf("Placa invalida\n");
+                return 0;
+            }
+            if (strcmp(dia, "SABADO") == 0 || strcmp(dia, "DOMINGO") == 0) {
                 printf("Nao ha proibicao no final de semana\n");
             }
+            else if (!validarDia(dia)) {
+                printf("Dia da semana invalido\n");
+                return 0;
+            }
+
             break;    
         default:
             printf("Dia da semana invalido\n");
