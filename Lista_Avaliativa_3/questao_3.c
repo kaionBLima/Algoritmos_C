@@ -3,11 +3,15 @@
 #include <ctype.h>
 
 int validarPlaca(char *placa) {
-    int comprimento = strlen(placa);
-    if ((comprimento == 8 && placa[3] == '-') || (comprimento == 7 && isalpha(placa[6]) && isdigit(placa[5]))) {
-        return 1; 
-    } else {
-        return 0; 
+   if (strlen(placa) == 8 && isalpha(placa[0]) && isalpha(placa[1]) && isalpha(placa[2]) &&
+        placa[3] == '-' && isdigit(placa[4]) && isdigit(placa[5]) && isdigit(placa[6]) && isdigit(placa[7])) {
+        return 1;
+    }
+
+    // Verifica o formato novo (LLLNLNN)
+    if (strlen(placa) == 8 && isalpha(placa[0]) && isalpha(placa[1]) && isalpha(placa[2]) &&
+        isdigit(placa[3]) && isalpha(placa[4]) && isdigit(placa[5]) && isdigit(placa[6])) {
+        return 1;
     }
 }
 
@@ -47,7 +51,7 @@ int main() {
     int ultimoDigito = placa[strlen(placa) - 1] - '0';
     switch (dia[0]) {
         case 'D': //Sabado ou domingo ou outro    
-            if (strcmp(dia, "SABADO") == 0 || strcmp(dia, "DOMINGO") == 0) {
+            if (strcmp(dia, "SABADO") == 0 || strcmp(dia, "DOMINGO") == 0 ) {
                 printf("Nao ha proibicao no final de semana\n");
             }
             break;
