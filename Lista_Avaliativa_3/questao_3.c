@@ -1,98 +1,103 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include <ctype.h>
 
+
+struct Tuple{
+    char dia[20];
+    int ultimo_digito;
+};
+
 int validacao_Placa(char *placa) {
-   if (strlen(placa) == 8 && isalpha(placa[0]) && isalpha(placa[1]) && isalpha(placa[2]) &&
+    if (strlen(placa) == 8 && isalpha(placa[0]) && isalpha(placa[1]) && isalpha(placa[2]) &&
         placa[3] == '-' && isdigit(placa[4]) && isdigit(placa[5]) && isdigit(placa[6]) && isdigit(placa[7])) {
         return 1;
     }
 
-    // Verifica o formato novo (LLLNLNN)
-    if (strlen(placa) == 7 && isalpha(placa[0]) && isalpha(placa[1]) && isalpha(placa[2]) &&
+    else if (strlen(placa) == 7 && isalpha(placa[0]) && isalpha(placa[1]) && isalpha(placa[2]) &&
         isdigit(placa[3]) && isalpha(placa[4]) && isdigit(placa[5]) && isdigit(placa[6])) {
         return 1;
     }
-}
-
-int validacao_Dia(char *dia) {
-    if (strcmp(dia, "SEGUNDA-FEIRA") == 0 || strcmp(dia, "TERCA-FEIRA") == 0 || strcmp(dia, "QUARTA-FEIRA") == 0 ||
-        strcmp(dia, "QUINTA-FEIRA") == 0 || strcmp(dia, "SEXTA-FEIRA") == 0 || strcmp(dia, "SABADO") == 0 || strcmp(dia, "DOMINGO") == 0) {
-        return 1; 
-    } else {
-        return 0; 
+    else{
+        return 0;
     }
 }
 
-int main() {
-    char placa[10];
-    char dia[20];
 
-    fgets(placa, sizeof(placa), stdin);
-    placa[strcspn(placa, "\n")] = '\0'; // Remover o caractere de nova linha
+int validacao_Dia(char dia[20]){
 
-    fgets(dia, sizeof(dia), stdin);
-    dia[strcspn(dia, "\n")] = '\0';
-
-    // Validar a placa e o dia da semana
-    if (!validacao_Placa(placa)) {
-        printf("Placa invalida\n");
-        return 0;
+    char comparar_dia[7][20] = {"SABADO", "DOMINGO", "SEGUNDA-FEIRA", "TERCA-FEIRA", "QUARTA-FEIRA", "QUINTA-FEIRA", "SEXTA-FEIRA"};
+        
+    for (int i = 0; i < 7; i++) {
+        if (strcmp(dia, comparar_dia[i]) == 0) {
+            return 1;
+        }
     }
-
-    if (!validacao_Dia(dia)) {
-        printf("Dia da semana invalido\n");
-        return 0;
-    }
-
-    // Verificar se a placa pode circular no dia informado
-    int ultimoDigito = placa[strlen(placa) - 1] - '0';
-    switch (dia[0]) {
-        case 'D': //Sabado ou domingo ou outro    
-            if (strcmp(dia, "SABADO")==0 || strcmp(dia, "DOMINGO") == 0 ) {
-                printf("Nao ha proibicao no final de semana\n");
-            }
-            break;
-        case 'S': //segunda
-            if (ultimoDigito == 0 || ultimoDigito == 1 && strcmp(dia, "SEGUNDA-FEIRA")==0) {
-                printf("%s nao pode circular %s\n", placa, dia);
-            } else {
-                printf("%s pode circular %s\n", placa, dia);
-            }
-            break;
-        case 'T': //terça
-            if (ultimoDigito == 2 || ultimoDigito == 3 && strcmp(dia, "TERCA-FEIRA")==0) {
-                printf("%s nao pode circular %s\n", placa, dia);
-            } else {
-                printf("%s pode circular %s\n", placa, dia);
-            }
-            break;
-        case 'Q': //quarta
-            if (ultimoDigito == 4 || ultimoDigito == 5 && strcmp(dia, "QUARTA-FEIRA")==0 ) {
-                printf("%s nao pode circular %s\n", placa, dia);
-            } else {
-                printf("%s pode circular %s\n", placa, dia);
-            }
-            break;
-        case 'I': //quinta
-            if (ultimoDigito == 6 || ultimoDigito == 7 && strcmp(dia, "QUINTA-FEIRA")==0 ) {
-                printf("%s nao pode circular %s\n", placa, dia);
-            } else {
-                printf("%s pode circular %s\n", placa, dia);
-            }
-            break;
-        case 'F': //sexta
-            if (ultimoDigito == 8 || ultimoDigito == 9 && strcmp(dia, "SEXTA-FEIRA")==0) {
-                printf("%s nao pode circular %s\n", placa, dia);
-            } else {
-                printf("%s pode circular %s\n", placa, dia);
-            }
-            break;
-
-        default:
-            printf("Dia da semana invalido\n");
-            }
     return 0;
+}
+
+
+int organizacao_CirculaDia(struct Tuple entrada){
+    int restricao = 0;
+
+    restricao = (strcmp(entrada.dia, "SEGUNDA-FEIRA") == 0 && (entrada.ultimo_digito == '0' || entrada.ultimo_digito == '1')) ||
+                (strcmp(entrada.dia, "TERCA-FEIRA") == 0 && (entrada.ultimo_digito == '2' || entrada.ultimo_digito == '3')) ||
+                (strcmp(entrada.dia, "QUARTA-FEIRA") == 0 && (entrada.ultimo_digito == '4' || entrada.ultimo_digito == '5')) ||
+                (strcmp(entrada.dia, "QUINTA-FEIRA") == 0 && (entrada.ultimo_digito == '6' || entrada.ultimo_digito == '7')) ||
+                (strcmp(entrada.dia, "SEXTA-FEIRA") == 0 && (entrada.ultimo_digito == '8' || entrada.ultimo_digito == '9'));
+    return !restricao; 
+}
+
+void lower(char dia[]){
+    for(int i= 0; dia[i]; i++){
+        dia[i] = tolower(dia[i]);
+    }
+}
+
+int main(){
+    char placa[9], dia[20];
+    int valida_dia, valida_placa;
+    
+    scanf("%s", &placa);
+    
+    char ultimo_digito = placa[strlen(placa) - 1];
+    
+    scanf("%s", &dia);
+
+    struct Tuple entrada;
+    strcpy(entrada.dia, dia);
+    entrada.ultimo_digito = ultimo_digito;
+
+
+    valida_dia = validacao_Dia(entrada.dia);
+    valida_placa = validacao_Placa(placa);
+
+    if(valida_placa == 0){
+        printf("Placa invalida\n");
+        if(valida_dia == 0){
+            printf("Dia da semana invalido\n");
+        }  
+    }
+    else{
+        if(valida_dia == 0){
+            printf("Dia da semana invalido\n");
+        }
+        else{
+            lower(dia);
+            
+            if(strcmp(dia, "sabado") == 0 || strcmp(dia, "domingo") == 0){
+                printf("Nao ha proibicao no fim de semana\n");
+            }
+            else if(organizacao_CirculaDia(entrada)){              
+                printf("%s pode circular %s\n", placa, dia);
+            }
+            else{
+                printf("%s nao pode circular %s\n", placa, dia);
+            }
+
+        }
     }
 
-
+    return 0;
+}
