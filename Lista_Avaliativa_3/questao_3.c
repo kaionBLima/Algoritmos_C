@@ -39,14 +39,14 @@ int validacao_Dia(char dia[20]){
 
 
 int organizacao_CirculaDia(struct Tuple entrada){
-    int restricao = 0;
+    int regras = 0;
 
-    restricao = (strcmp(entrada.dia, "SEGUNDA-FEIRA") == 0 && (entrada.ultimo_digito == '0' || entrada.ultimo_digito == '1')) ||
+    regras = (strcmp(entrada.dia, "SEGUNDA-FEIRA") == 0 && (entrada.ultimo_digito == '0' || entrada.ultimo_digito == '1')) ||
                 (strcmp(entrada.dia, "TERCA-FEIRA") == 0 && (entrada.ultimo_digito == '2' || entrada.ultimo_digito == '3')) ||
                 (strcmp(entrada.dia, "QUARTA-FEIRA") == 0 && (entrada.ultimo_digito == '4' || entrada.ultimo_digito == '5')) ||
                 (strcmp(entrada.dia, "QUINTA-FEIRA") == 0 && (entrada.ultimo_digito == '6' || entrada.ultimo_digito == '7')) ||
                 (strcmp(entrada.dia, "SEXTA-FEIRA") == 0 && (entrada.ultimo_digito == '8' || entrada.ultimo_digito == '9'));
-    return !restricao; 
+    return !regras; 
 }
 
 void lower(char dia[]){
