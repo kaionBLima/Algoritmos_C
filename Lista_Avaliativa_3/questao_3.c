@@ -9,23 +9,35 @@ struct Tuple{
     int ultimo_digito;
 };
 
-int validacao_Placa(char *placa) {
-    if (strlen(placa) == 8 && isalpha(placa[0]) && isalpha(placa[1]) && isalpha(placa[2]) &&
-        placa[3] == '-' && isdigit(placa[4]) && isdigit(placa[5]) && isdigit(placa[6]) && isdigit(placa[7])) {
-        return 1;
-    }
-
-    else if (strlen(placa) == 7 && isalpha(placa[0]) && isalpha(placa[1]) && isalpha(placa[2]) &&
-        isdigit(placa[3]) && isalpha(placa[4]) && isdigit(placa[5]) && isdigit(placa[6])) {
-        return 1;
-    }
-    else{
+int validacaoPlaca(char *placa){  
+   if (strlen(placa)==8){
+      for (int i = 0; i < 3; i++){
+        if (!isalpha(placa[i])){
+            return 0;
+        }
+      }
+      if (placa[3] != '-' || !isdigit(placa[4]) || !isdigit(placa[5]) || !isdigit(placa[6]) || !isdigit(placa[7])){
         return 0;
-    }
+      } 
+   }
+   else if (strlen(placa)==7){
+      for (int i = 0; i <3; i++){
+         if (!isalpha(placa[i])){
+           return 0;
+         }
+      }
+      if (!isdigit(placa[3]) || !isalpha(placa[4]) || !isdigit(placa[5]) || !isdigit(placa[6])){
+        return 0;
+      }
+   }
+   else{
+      return 0;
+   }
+   return 1;
 }
 
 
-int validacao_Dia(char dia[20]){
+int validacaoDia(char dia[20]){
 
     char comparar_dia[7][20] = {"SABADO", "DOMINGO", "SEGUNDA-FEIRA", "TERCA-FEIRA", "QUARTA-FEIRA", "QUINTA-FEIRA", "SEXTA-FEIRA"};
         
@@ -70,8 +82,8 @@ int main(){
     entrada.ultimo_digito = ultimo_digito;
 
 
-    valida_dia = validacao_Dia(entrada.dia);
-    valida_placa = validacao_Placa(placa);
+    valida_dia = validacaoDia(entrada.dia);
+    valida_placa = validacaoPlaca(placa);
 
     if(valida_placa == 0){
         printf("Placa invalida\n");
